@@ -1,3 +1,5 @@
+package projetoiti;
+
 import java.util.ArrayList;
 
 
@@ -24,7 +26,7 @@ public class CodificadorPPM {
 		
 		char c;
 		
-		while((c = l.getNextCharacter()) != '¬'){
+		while((c = l.getNextCharacter()) != 'ï¿½'){
 			System.out.println("lido = " + c + " and "  + (int)c);
 		}*/
 		

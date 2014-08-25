@@ -1,3 +1,5 @@
+package projetoiti;
+
 import java.util.Comparator;
 
 public class Instancia{

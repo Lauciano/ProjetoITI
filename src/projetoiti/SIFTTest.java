@@ -1,3 +1,5 @@
+package projetoiti;
+
 import ij.process.ColorProcessor;
 import ij.process.ImageProcessor;
 

@@ -1,3 +1,5 @@
+package projetoiti;
+
 
 public class Intervalo {
 	private String instancia;

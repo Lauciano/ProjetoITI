@@ -1,3 +1,5 @@
+package projetoiti;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -22,7 +24,7 @@ public class Leitor {
 			linhaAtual = br.readLine();
 			System.out.println("Linha lida = " + linhaAtual);
 		}catch(FileNotFoundException e){
-			System.err.println("Arquivo não encontrado!");
+			System.err.println("Arquivo nï¿½o encontrado!");
 		} catch (IOException e) {
 			System.err.println("Erro na leitura do arquivo!");
 		}
@@ -45,7 +47,7 @@ public class Leitor {
 			
 			
 		} catch (FileNotFoundException e) {
-			System.err.println("Arquivo não encontrado!");
+			System.err.println("Arquivo nï¿½o encontrado!");
 		} catch (IOException e){
 			System.err.println("Erro na leitura do arquivo!");
 		}
@@ -60,7 +62,7 @@ public class Leitor {
 			br.ready();
 		} catch (IOException e1) {
 			System.err.println("Arquivo ja foi fechado!");
-			return '¬';
+			return 'ï¿½';
 		}
 		
 		if(index == linhaAtual.length()){
@@ -69,7 +71,7 @@ public class Leitor {
 				linhaAtual = br.readLine();
 				if(linhaAtual == null){
 					br.close();
-					return '¬';
+					return 'ï¿½';
 				}
 			} catch (IOException e) {
 				System.out.println("Erro na leitura do arquivo!");

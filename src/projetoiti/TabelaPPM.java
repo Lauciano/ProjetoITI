@@ -1,3 +1,5 @@
+package projetoiti;
+
 import java.util.ArrayList;
 
 public class TabelaPPM {
@@ -9,7 +11,7 @@ public class TabelaPPM {
 	
 	// Construtores
 	
-	/* Construtor não vazio
+	/* Construtor nï¿½o vazio
 	 * Passar a lista com os caracteres do alfabeto na forma de string */
 	public TabelaPPM(ArrayList<Character> alfabeto){
 		this.alfabeto = alfabeto;
@@ -59,11 +61,11 @@ public class TabelaPPM {
 		boolean temRemocaoEmK1 = false, temRemocaoEmK0 = false;
 		boolean inserido = false;
 		
-		// Laço de Leitura do arquivo
-		while(!(lido = "" + leitor.getNextCharacter()).equals("¬")){
+		// Laï¿½o de Leitura do arquivo
+		while(!(lido = "" + leitor.getNextCharacter()).equals("ï¿½")){
 			caux = getContextoEmK2(cprepre + cpre);
 			if(caux != null){
-				//Há contexto K2 cprepre cpre
+				//Hï¿½ contexto K2 cprepre cpre
 				if(caux.temIndice(lido)){
 					codigo.add(Intervalo.copy(caux.getInstancia(lido).getIntervalo()));
 					inserido = true;
@@ -72,7 +74,7 @@ public class TabelaPPM {
 					if(caux.temIndice("ESC")){
 						codigo.add(Intervalo.copy(caux.getInstancia("ESC").getIntervalo()));
 					}
-					//Fazer a remoção temporária do povim
+					//Fazer a remoï¿½ï¿½o temporï¿½ria do povim
 					Contexto caux2 = getContextoEmK1(cpre);
 					Contexto copia = Contexto.copy(caux2);
 					for(Instancia i : caux2.v){
@@ -87,7 +89,7 @@ public class TabelaPPM {
 					caux = copia;
 				}
 			} else if(!cprepre.equals("")){
-				//Não há contexto K2, mas há cprepre
+				//Nï¿½o hï¿½ contexto K2, mas hï¿½ cprepre
 				//Portanto deve ser adicionado
 				Contexto caux2 = new Contexto(cprepre + cpre);
 				k2.add(caux2);
@@ -98,9 +100,9 @@ public class TabelaPPM {
 				}
 			}
 			
-			if(!temRemocaoEmK1) caux = getContextoEmK1(cpre); //Esta linha será modificada com a remoção
+			if(!temRemocaoEmK1) caux = getContextoEmK1(cpre); //Esta linha serï¿½ modificada com a remoï¿½ï¿½o
 			if(caux != null){
-				//Há contexto K1 cpre
+				//Hï¿½ contexto K1 cpre
 				if(caux.temIndice(lido)){
 					if(!inserido){
 						codigo.add(Intervalo.copy(caux.getInstancia(lido).getIntervalo()));
@@ -115,7 +117,7 @@ public class TabelaPPM {
 					if(caux.temIndice("ESC")){
 						if(!inserido) codigo.add(Intervalo.copy(caux.getInstancia("ESC").getIntervalo()));
 					}
-					//Fazer a remoção temporária do povim
+					//Fazer a remoï¿½ï¿½o temporï¿½ria do povim
 					Contexto copia = Contexto.copy(k0);
 					for(Instancia i : caux.v){
 						if(!i.getSymbol().equals("ESC")) copia.removeInstancia(i.getSymbol());
@@ -129,7 +131,7 @@ public class TabelaPPM {
 					caux = copia;
 				}
 			} else if(!cpre.equals("")){
-				//Não há contexto K1, mas há cpre
+				//Nï¿½o hï¿½ contexto K1, mas hï¿½ cpre
 				//Portanto deve ser adicionado
 				Contexto caux2 = new Contexto(cpre);
 				k1.add(caux2);
@@ -140,7 +142,7 @@ public class TabelaPPM {
 				}
 			}
 						
-			//O k0 será modificado com a remoção
+			//O k0 serï¿½ modificado com a remoï¿½ï¿½o
 			if(!temRemocaoEmK0) caux = k0;
 			if(caux.temIndice(lido)){				
 				if(!inserido) codigo.add(Intervalo.copy(caux.getInstancia(lido).getIntervalo()));
@@ -148,19 +150,19 @@ public class TabelaPPM {
 				if(caux.temIndice("ESC")){
 					if(!inserido) codigo.add(Intervalo.copy(caux.getInstancia("ESC").getIntervalo()));
 				}
-				//Apenas pega o código se o K = 0 original não tem
+				//Apenas pega o cï¿½digo se o K = 0 original nï¿½o tem
 				if(!k0.temIndice(lido)){
 					if(!inserido) codigo.add(Intervalo.copy(km1.getInstancia(lido).getIntervalo()));
 					km1.removeInstancia(lido);
 				}
 			}
 			k0.addOcorrencia(lido);
-			//Remoção de ESC caso já tenha todo o alfabeto
+			//Remoï¿½ï¿½o de ESC caso jï¿½ tenha todo o alfabeto
 			if(k0.v.size() > alfabeto.size()){
 				k0.removeInstancia("ESC");
 			}
 			
-			//Atualização de variáveis
+			//Atualizaï¿½ï¿½o de variï¿½veis
 			temRemocaoEmK1 = false;
 			temRemocaoEmK0 = false;
 			inserido = false;
