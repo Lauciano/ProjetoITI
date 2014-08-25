@@ -1,22 +1,17 @@
-package projetoiti;
-
 
 public class Intervalo {
-	private String instancia;
 	private double inicio;
 	private double fim;
 	
 	// Contrutor
-
-	public Intervalo(String instancia, double inicio, double fim){
-		this.instancia = instancia;
+	public Intervalo(double inicio, double fim){
 		this.inicio = inicio;
 		this.fim = fim;
 	}
 	
-	public Intervalo(double inicio, double fim){
-		this.inicio = inicio;
-		this.fim = fim;
+	public Intervalo(Intervalo i){
+		this.inicio = i.inicio;
+		this.fim = i.fim;
 	}
 	
 	// Getters e Setters
@@ -34,21 +29,13 @@ public class Intervalo {
 		this.fim = fim;
 	}
 	
-	public String getInstancia(){
-		return instancia;
-	}
-	
-	public void setInstancia(String instancia){
-		this.instancia = instancia;
-	}
-	
 	// Copy
 	public static Intervalo copy(Intervalo i){
-		return new Intervalo(i.instancia, i.inicio, i.fim);
+		return new Intervalo( i.inicio, i.fim);
 	}
 	
 	// To String
 	public String toString(){
-		return instancia + " - [" + inicio + ", " + fim + ")";
+		return "[" + inicio + ", " + fim + ")";
 	}
 }

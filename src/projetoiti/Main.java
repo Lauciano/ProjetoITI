@@ -1,0 +1,73 @@
+import com.colloquial.arithcode.ArithEncoder;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class Main {
+
+    public static void main(String args[]) throws FileNotFoundException, IOException {
+
+        System.out.println("Iniciando leitura...");
+        Contexto raiz = new Contexto(0);
+        Leitor leitor = null;
+        
+        try {
+            leitor = new Leitor("texto.txt"); // Arquivo a ser lido
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        FileOutputStream fop = null;
+        try {
+            fop = new FileOutputStream(new File("saida.txt").getAbsoluteFile());
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        ArithEncoder encoder = new ArithEncoder(fop);
+
+        //Chamada
+        //Parï¿½metros
+        //O contexto raiz
+        //O leitor
+        //O contexto mï¿½ximo k passado como parï¿½metro
+        // Atenï¿½ï¿½o: ainda nï¿½o estï¿½ tratando o mecanismo de exclusï¿½o
+        //          mesmo assim funciona para o caso de nï¿½o usï¿½-lo
+        //ArrayList<Intervalo> intv = Contexto.geraCodigo(raiz, leitor, 2);
+        //System.out.println("Saida:");
+        //for(Intervalo i : intv){
+        //	System.out.println(i);
+        //}
+
+        //Chamada
+        //Parï¿½metros
+        //O contexto raiz
+        //O leitor
+        //O contexto mï¿½ximo k passado como parï¿½metro
+        // Atenï¿½ï¿½o: ainda nï¿½o estï¿½ tratando o mecanismo de exclusï¿½o
+        //          mesmo assim funciona para o caso de nï¿½o usï¿½-lo
+        // Retorno:
+        //		Inteiro		low
+        //					high
+        //					total
+        
+        System.out.println("Gerando código...");
+        ArrayList<Codigo> inteiro = Contexto.geraCodigoInteiro(raiz, leitor, 2);
+        System.out.println("Código de tamanho " + inteiro.size());
+        
+        System.out.println("Codificando...");
+        for (Codigo i : inteiro) {
+            try {
+                encoder.encode(i.getLow(), i.getHigh(), i.getTotal());
+            } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        System.out.println("Concluído.");
+        return;
+    }
+}
