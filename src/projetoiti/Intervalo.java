@@ -1,3 +1,5 @@
+package projetoiti;
+
 
 public class Intervalo {
 	private double inicio;

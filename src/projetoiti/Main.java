@@ -1,3 +1,5 @@
+package projetoiti;
+
 import com.colloquial.arithcode.ArithEncoder;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -54,9 +56,9 @@ public class Main {
         //					high
         //					total
         
-        System.out.println("Gerando código...");
+        System.out.println("Gerando cï¿½digo...");
         ArrayList<Codigo> inteiro = Contexto.geraCodigoInteiro(raiz, leitor, 2);
-        System.out.println("Código de tamanho " + inteiro.size());
+        System.out.println("Cï¿½digo de tamanho " + inteiro.size());
         
         System.out.println("Codificando...");
         for (Codigo i : inteiro) {
@@ -67,7 +69,7 @@ public class Main {
             }
         }
 
-        System.out.println("Concluído.");
+        System.out.println("Concluï¿½do.");
         return;
     }
 }
