@@ -16,7 +16,7 @@ public class Main {
         System.out.println("Iniciando leitura...");
         Contexto raiz = new Contexto(0);
         Leitor leitor = null;
-        
+
         try {
             leitor = new Leitor("texto.txt"); // Arquivo a ser lido
         } catch (IOException ex) {
@@ -43,7 +43,6 @@ public class Main {
         //for(Intervalo i : intv){
         //	System.out.println(i);
         //}
-
         //Chamada
         //Par�metros
         //O contexto raiz
@@ -55,11 +54,10 @@ public class Main {
         //		Inteiro		low
         //					high
         //					total
-        
-        System.out.println("Gerando c�digo...");
+        System.out.println("Gerando código...");
         ArrayList<Codigo> inteiro = Contexto.geraCodigoInteiro(raiz, leitor, 2);
         System.out.println("C�digo de tamanho " + inteiro.size());
-        
+
         System.out.println("Codificando...");
         for (Codigo i : inteiro) {
             try {
@@ -69,7 +67,7 @@ public class Main {
             }
         }
 
-        System.out.println("Conclu�do.");
+        System.out.println("Concluído.");
         return;
     }
 }
