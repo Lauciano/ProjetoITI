@@ -22,7 +22,7 @@ public class SIFTTest {
     public static void main(String args[]) {
         String OS = System.getProperty("os.name").toLowerCase();
         System.out.println("OS::" + OS);
-        String filePath = "tiger.jpg";
+        String filePath = "files/tiger.jpg";
         int width, height;
         boolean arrows = false;
 

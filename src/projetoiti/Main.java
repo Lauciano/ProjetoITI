@@ -14,17 +14,17 @@ public class Main {
     public static void main(String args[]) throws FileNotFoundException, IOException {
 
         System.out.println("Iniciando leitura...");
-        Contexto raiz = new Contexto(0);
+        Arvore raiz = new Arvore(0);
         Leitor leitor = null;
 
         try {
-            leitor = new Leitor("texto.txt"); // Arquivo a ser lido
+            leitor = new Leitor("files/texto.txt"); // Arquivo a ser lido
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
         FileOutputStream fop = null;
         try {
-            fop = new FileOutputStream(new File("saida.txt").getAbsoluteFile());
+            fop = new FileOutputStream(new File("files/saida.txt").getAbsoluteFile());
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -55,7 +55,13 @@ public class Main {
         //					high
         //					total
         System.out.println("Gerando código...");
-        ArrayList<Codigo> inteiro = Contexto.geraCodigoInteiro(raiz, leitor, 2);
+        Arvore.geraArvore(raiz, leitor, 2);
+        
+        Leitor leitor2 = new Leitor("files/texto.txt");
+        ArrayList<Codigo> inteiro = Arvore.geraCodigoInteiroEstatico(raiz, leitor2, 2);
+        
+        //ArrayList<Codigo> inteiro = Arvore.geraCodigoInteiro(raiz, leitor, 2);
+        
         System.out.println("C�digo de tamanho " + inteiro.size());
 
         System.out.println("Codificando...");
