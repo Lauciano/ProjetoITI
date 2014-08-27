@@ -7,6 +7,7 @@
 package projetoiti;
 
 import com.colloquial.arithcode.ArithEncoder;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,8 +24,14 @@ public class Teste {
     FileOutputStream fop;
     ArithEncoder encoder;
     Leitor l;
+    String pasta;
+    int comeco;
+    String arvore;
     
     public Teste(String pasta, String arvore, int comeco){
+        this.pasta = pasta;
+        this.arvore = arvore;
+        this.comeco = comeco;
         try {
             if(comeco < 10){
                 fop = new FileOutputStream("files/saida/" + pasta + "/image_000" + comeco + "com" + arvore + ".txt");
@@ -51,6 +58,14 @@ public class Teste {
         } catch (IOException ex) {
             Logger.getLogger(Teste.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public double getTaxa(){
+        File comprimido = new File("files/saida/" + pasta + "/image_00" + comeco + "com" + arvore + ".txt");
+        File original = new File("files/" + pasta  + "/image_00" + comeco + ".jpg");
+        
+        return original.length()/comprimido.length();
+        
     }
 
 }
