@@ -16,28 +16,41 @@ public class Main {
         System.out.println("Iniciando leitura...");
         Arvore raiz = new Arvore(0);
         Leitor leitor = null;
+        Byte b;
+        leitor = new Leitor("files/soccer_ball", 30, 1);
 
+        FileOutputStream fop1 = null;
         try {
-            leitor = new Leitor("files/texto.txt"); // Arquivo a ser lido
-        } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        FileOutputStream fop = null;
-        try {
-            fop = new FileOutputStream(new File("files/saida.txt").getAbsoluteFile());
+            fop1 = new FileOutputStream(new File("files/dollar_bill.txt").getAbsoluteFile());
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        ArithEncoder encoder = new ArithEncoder(fop);
+        FileOutputStream fop2 = null;
+        try {
+            fop2 = new FileOutputStream(new File("files/stegosaurus.txt").getAbsoluteFile());
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        FileOutputStream fop3 = null;
+        try {
+            fop3 = new FileOutputStream(new File("files/soccer_ball.txt").getAbsoluteFile());
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        ArithEncoder encoder1 = new ArithEncoder(fop1);
+        ArithEncoder encoder2 = new ArithEncoder(fop2);
+        ArithEncoder encoder3 = new ArithEncoder(fop3);
 
         //Chamada
-        //Par�metros
+        //Parâmetros
         //O contexto raiz
         //O leitor
-        //O contexto m�ximo k passado como par�metro
-        // Aten��o: ainda n�o est� tratando o mecanismo de exclus�o
-        //          mesmo assim funciona para o caso de n�o us�-lo
+        //O contexto máximo k passado como par�metro
+        // Atenção: ainda não está tratando o mecanismo de exclusão
+        //          mesmo assim funciona para o caso de não usá-lo
         //ArrayList<Intervalo> intv = Contexto.geraCodigo(raiz, leitor, 2);
         //System.out.println("Saida:");
         //for(Intervalo i : intv){
@@ -56,24 +69,47 @@ public class Main {
         //					total
         System.out.println("Gerando código...");
         Arvore.geraArvore(raiz, leitor, 2);
-        
-        Leitor leitor2 = new Leitor("files/texto.txt");
-        ArrayList<Codigo> inteiro = Arvore.geraCodigoInteiroEstatico(raiz, leitor2, 2);
-        
+
+        Leitor leitor2 = new Leitor("files/dollar_bill", 1, 50);
+        ArrayList<Codigo> inteiro1 = Arvore.geraCodigoInteiroEstatico(raiz, leitor2, 2);
+
+        Leitor leitor3 = new Leitor("files/stegosaurus", 1, 50);
+        ArrayList<Codigo> inteiro2 = Arvore.geraCodigoInteiroEstatico(raiz, leitor3, 2);
+
+        Leitor leitor4 = new Leitor("files/soccer_ball", 1, 50);
+        ArrayList<Codigo> inteiro3 = Arvore.geraCodigoInteiroEstatico(raiz, leitor4, 2);
+
         //ArrayList<Codigo> inteiro = Arvore.geraCodigoInteiro(raiz, leitor, 2);
-        
-        System.out.println("C�digo de tamanho " + inteiro.size());
+
+        System.out.println("Código de tamanho " + inteiro1.size());
+        System.out.println("Código de tamanho " + inteiro2.size());
+        System.out.println("Código de tamanho " + inteiro3.size());
 
         System.out.println("Codificando...");
-        for (Codigo i : inteiro) {
+        for (Codigo i : inteiro1) {
             try {
-                encoder.encode(i.getLow(), i.getHigh(), i.getTotal());
+                encoder1.encode(i.getLow(), i.getHigh(), i.getTotal());
+            } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        for (Codigo i : inteiro2) {
+            try {
+                encoder2.encode(i.getLow(), i.getHigh(), i.getTotal());
+            } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        for (Codigo i : inteiro3) {
+            try {
+                encoder3.encode(i.getLow(), i.getHigh(), i.getTotal());
             } catch (IOException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
         System.out.println("Concluído.");
-        return;
     }
 }
