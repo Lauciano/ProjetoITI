@@ -15,6 +15,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 /**
@@ -24,7 +26,7 @@ import javax.imageio.ImageIO;
 public class Imagem {
     
     private BufferedImage image;
-    private BufferedImage imageGray;
+    private BufferedImage copy;
     private Byte[][] yMatrix;
     
     public Imagem(String end){
@@ -34,6 +36,8 @@ public class Imagem {
         } catch (IOException ex) {
             System.err.println("Problemas na leitura da imagem! Verifique o caminho.");
         }
+        
+        copy = copyImage(image);
         
         //SIFT
         String OS = System.getProperty("os.name").toLowerCase();
@@ -69,20 +73,72 @@ public class Imagem {
                     drawRectangles(image, r[1], r[0], r[2], r[3]);
                 }
             }
+            
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
         
+        image = getResult();
+        
         //Cinzação
         yMatrix = new Byte[image.getWidth()][image.getHeight()];
         toYIQ();
+    }
+
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    public void setImage(BufferedImage image) {
+        this.image = image;
+    }
+
+    public BufferedImage getCopy() {
+        return copy;
+    }
+
+    public void setCopy(BufferedImage copy) {
+        this.copy = copy;
+    }
+    
+    public BufferedImage getResult(){
+        
+        double[] ar = new double[3];
+        BufferedImage branca = getWhiteImage(image.getWidth(),image.getHeight());
+        
+        for(int i = 0; i < image.getWidth(); i++){
+            for(int j = 0; j < image.getHeight(); j++){
+                image.getRaster().getPixel(i, j, ar);
+                if(ar[0] == 255.0 && ar[1] == 255.0 && ar[2] == 255.0){
+                    copy.getRaster().getPixel(i, j, ar);
+                    double[] originArray = {ar[0],ar[1],ar[2]};
+                    branca.getRaster().setPixel(i, j, originArray);
+                }
+            }
+        }
+        
+        return branca;
+    }
+    
+    public BufferedImage copyImage(BufferedImage image){
+        
+        double arTemp[] = new double[3];
+        BufferedImage copy = new BufferedImage(image.getWidth(),image.getHeight(),BufferedImage.TYPE_INT_RGB);
+        
+        for(int i = 0; i < image.getWidth(); i++)
+            for(int j = 0; j < image.getHeight(); j++){
+                image.getRaster().getPixel(i, j, arTemp);
+                double newArray[] = {arTemp[0],arTemp[1],arTemp[2]};
+                copy.getRaster().setPixel(i, j, newArray);
+            }
+        return copy;    
     }
     
     private void toYIQ(){
            
         double[] dArray = new double[3];
         int yArray;
-        //double[] yiqArray = new double[3];
         
         for(int i = 0; i < image.getWidth(); i++){
             for(int j = 0; j < image.getHeight(); j++){
@@ -90,9 +146,6 @@ public class Imagem {
                 image.getRaster().getPixel(i, j, dArray);
                 
                 yArray = (int) (0.299*dArray[0] + 0.587*dArray[1] + 0.114*dArray[2]);
-                //yiqArray[0] = 0.299*dArray[0] + 0.587*dArray[1] + 0.114*dArray[2];
-                //yiqArray[1] = 0.596*dArray[0] - 0.275*dArray[1] - 0.321*dArray[2];
-                //yiqArray[2] = 0.212*dArray[0] - 0.523*dArray[1] + 0.311*dArray[2];
                 
                 yArray = yArray - 128;
                 yMatrix[i][j] = (byte) yArray;
@@ -113,34 +166,16 @@ public class Imagem {
         return image.getHeight();
     }
     
-    /*private BufferedImage toYIQ_TESTE(){
-        
-        double[] dArray = new double[4];
-        double[] dArrayTemp = new double[4];
-        double[] yiqArray = new double[4];
-        
-        for(int i = 0; i < image.getWidth(); i++){
-            for(int j = 0; j < image.getHeight(); j++){
-                
-                image.getRaster().getPixel(i, j, dArray);
-                
-                yiqArray[0] = 0.299*dArray[0] + 0.587*dArray[1] + 0.114*dArray[2];
-                yiqArray[1] = 0.596*dArray[0] - 0.275*dArray[1] - 0.321*dArray[2];
-                yiqArray[2] = 0.212*dArray[0] - 0.523*dArray[1] + 0.311*dArray[2];
-                   
-                
-                dArrayTemp[0] = yiqArray[0] + 0.956*yiqArray[1] + 0.621*yiqArray[2];
-                dArrayTemp[1] = yiqArray[0] - 0.272*yiqArray[1] - 0.647*yiqArray[2];
-                dArrayTemp[2] = yiqArray[0] - 1.105*yiqArray[1] + 1.702*yiqArray[2];
-                
-                imageGray.getRaster().setPixel(i, j, dArrayTemp);
-                
-            }
+     public BufferedImage getWhiteImage(int width, int height){
+        BufferedImage bf = new BufferedImage(width,height,BufferedImage.TYPE_INT_RGB);
+        for(int i = 0 ; i < width; i++){
+            for(int j = 0; j < height; j++){
+                double[] white = {255.0,255.0,255.0};
+                bf.getRaster().setPixel(i, j, white);
+            }   
         }
-        
-        return imageGray;
-        
-    }*/
+        return bf;
+    }
 
     private static void drawArrows(BufferedImage img, double x, double y, double scale, double angle) {
         Graphics2D g = (Graphics2D) img.getGraphics();
@@ -150,9 +185,9 @@ public class Imagem {
         int y2 = (int) Math.round(y + dy);
         //drawArrow(g, x, y, x2, y2);
         g.drawLine((int) Math.round(x), (int) Math.round(y), x2, y2);
-        g.setColor(Color.RED);
+        g.setColor(Color.WHITE);
         g.drawOval((int) Math.round(x), (int) Math.round(y), 0, 0);
-        g.setColor(Color.GREEN);
+        g.setColor(Color.WHITE);
         g.drawOval(x2, y2, 0, 0);
     }
 
@@ -173,9 +208,9 @@ public class Imagem {
         }
         g.fillRect((int) Math.round(x), (int) Math.round(y), (int) Math.round(dx), (int) Math.round(dy));
         g.drawRect((int) Math.round(x), (int) Math.round(y), (int) Math.round(dx), (int) Math.round(dy));
-        g.setColor(Color.RED);
+        g.setColor(Color.WHITE);
         g.drawOval((int) Math.round(xo), (int) Math.round(yo), 0, 0);
-        g.setColor(Color.GREEN);
+        g.setColor(Color.WHITE);
         g.drawOval(x2o, y2o, 0, 0);
     }
 }

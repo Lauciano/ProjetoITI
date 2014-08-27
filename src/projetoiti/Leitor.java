@@ -32,6 +32,14 @@ public class Leitor {
 
     }
 
+    public Imagem[] getPasta() {
+        return pasta;
+    }
+
+    public void setPasta(Imagem[] pasta) {
+        this.pasta = pasta;
+    }
+    
     public Leitor(String diretorio, int quantidade, int comeco) throws FileNotFoundException, IOException  {
         StringBuilder sb;
         pasta = new Imagem[quantidade];
@@ -100,7 +108,16 @@ public class Leitor {
         return simbolo[index++];
     }
     
-    public Byte getNextByte() {
+    public Byte getNextByte(){
+        Byte b;
+        do{
+            b = getNext();
+            if(b == null) break;
+        }while(b == 127);
+        return b;
+    }
+    
+    public Byte getNext() {
         if(coluna >= pasta[pastaindex].getWidth()){
             linha++;
             if(linha >= pasta[pastaindex].getHeight()){
