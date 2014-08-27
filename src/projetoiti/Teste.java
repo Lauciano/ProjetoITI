@@ -24,10 +24,15 @@ public class Teste {
     ArithEncoder encoder;
     Leitor l;
     
-    public Teste(String arquivo,int comeco){
+    public Teste(String pasta, String arvore, int comeco){
         try {
-            fop = new FileOutputStream("saida/" + arquivo);
-            l = new Leitor(arquivo,1,comeco);
+            if(comeco < 10){
+                fop = new FileOutputStream("files/saida/" + pasta + "/image_000" + comeco + "com" + arvore + ".txt");
+            } else {
+                
+            fop = new FileOutputStream("files/saida/" + pasta + "/image_00" + comeco + "com" + arvore + ".txt");
+            }
+            l = new Leitor("files/" + pasta, 1, comeco);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Teste.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
