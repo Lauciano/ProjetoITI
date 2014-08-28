@@ -40,24 +40,44 @@ public class Main {
     public static void main(String args[]) throws FileNotFoundException, IOException {
         
         System.out.println("Iniciando leitura...");
-        Arvore raiz = new Arvore(0);
-        Leitor leitor = null;
         Byte b;
-        leitor = new Leitor("files/soccer_ball", 45, 1);
+        String[] categoria = {"dollar_bill", "soccer_ball", "stegosaurus"};
+        Arvore[] raiz = new Arvore[3];
+        Leitor[] leitor = new Leitor[3];
+        
+        for(int i = 0; i < 3; i++){
+            raiz[i] = new Arvore(0);
+            leitor[i] = new Leitor("files/" + categoria[i], 45, 1);
+        }
 
         System.out.println("Gerando código...");
-        Arvore.geraArvore(raiz, leitor, 2);
+        for(int i = 0; i < 3; i++){
+            Arvore.geraArvore(raiz[i], leitor[i], 3);
+        }
 
         System.out.println("Codificando...");
         Teste[] dollar_bill = new Teste[5];
         Teste[] soccer_ball = new Teste[5];
         Teste[] stegosaurus = new Teste[5];
         
-        for(Teste t : dollar_bill){
-            
+        for(int j = 0; j < 5; j++) {
+            for(int i = 0; i < 3; i++){
+                dollar_bill[j] = new Teste("dollar_bill", categoria[i], j + 46);
+                dollar_bill[j].codifica(raiz[i], 3);
+                System.out.println("dollar_bill00" + (j + 46) + " com arvore de " + categoria[i] + ": " + dollar_bill[j].getTaxa());
+            }
+            for(int i = 0; i < 3; i++){
+                soccer_ball[j] = new Teste("soccer_ball", categoria[i], j + 46);
+                soccer_ball[j].codifica(raiz[i], 3);
+                System.out.println("soccer_ball00" + (j + 46) + " com arvore de " + categoria[i] + ": " + soccer_ball[j].getTaxa());
+            }
+            for(int i = 0; i < 3; i++){
+                stegosaurus[j] = new Teste("stegosaurus", categoria[i], j + 46);
+                stegosaurus[j].codifica(raiz[i], 3);
+                System.out.println("stegosaurus00" + (j + 46) + " com arvore de " + categoria[i] + ": " + stegosaurus[j].getTaxa());
+            }
         }
         
-
         System.out.println("Concluído.");
     }
 }

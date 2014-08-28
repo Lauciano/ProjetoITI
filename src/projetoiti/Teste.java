@@ -62,10 +62,8 @@ public class Teste {
     
     public double getTaxa(){
         File comprimido = new File("files/saida/" + pasta + "/image_00" + comeco + "com" + arvore + ".txt");
-        File original = new File("files/" + pasta  + "/image_00" + comeco + ".jpg");
         
-        return original.length()/comprimido.length();
-        
+        return l.getContador()/comprimido.length();
     }
 
 }

@@ -2,7 +2,6 @@ package projetoiti;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,6 +20,7 @@ public class Leitor {
     private int index;
     private static final int size_simbolo = 1000;
     private String nomeArq;
+    private double contador;
 
     public Leitor(String nomeArq) throws FileNotFoundException, IOException {
 
@@ -29,6 +29,7 @@ public class Leitor {
         simbolo = new byte[size_simbolo];
         bitfinal = 0;
         index = 0;
+        contador = 0;
 
     }
 
@@ -57,6 +58,7 @@ public class Leitor {
         pastaindex = 0;
         linha = 0;
         coluna = 0;
+        contador = 0;
     }
     
     public ArrayList<Byte> getAlfabeto() {
@@ -112,8 +114,12 @@ public class Leitor {
         Byte b;
         do{
             b = getNext();
-            if(b == null) break;
+            if(b == null) {
+                contador--;
+                break;
+            }
         }while(b == 127);
+        contador++;
         return b;
     }
     
@@ -122,7 +128,7 @@ public class Leitor {
             linha++;
             if(linha >= pasta[pastaindex].getHeight()){
                 pastaindex++;
-                System.out.println("linha: " + linha + " coluna: " + coluna);
+                //System.out.println("linha: " + linha + " coluna: " + coluna);
                 if(pastaindex >= pasta.length){
                     return null;
                 } else {
@@ -135,5 +141,9 @@ public class Leitor {
         }
         
         return pasta[pastaindex].getYMatrix()[coluna++][linha];
+    }
+    
+    public double getContador(){
+        return contador;
     }
 }
