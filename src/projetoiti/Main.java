@@ -96,7 +96,7 @@ public class Main {
             System.out.println("Codificando " + categoria[j]);
             for(int k = 0; k < 5; k++) { // Imagem
                 for(int i = 0; i < 50; i++){ // Arvore
-                    file = new FileInputStream("files/arvore/" + categoria[0]);
+                    file = new FileInputStream("files/arvore/" + categoria[i]);
                     buffer2 = new BufferedInputStream(file);
                     input = new ObjectInputStream(buffer2);
                     try {
