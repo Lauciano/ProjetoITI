@@ -2,11 +2,12 @@ package projetoiti;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Arvore {
+public class Arvore implements Serializable {
 
     private boolean esc;
     private byte valor;

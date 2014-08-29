@@ -1,6 +1,8 @@
 package projetoiti;
 
-public class Codigo {
+import java.io.Serializable;
+
+public class Codigo implements Serializable {
 
     private int low;
     private int high;

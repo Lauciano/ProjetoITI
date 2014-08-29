@@ -3,7 +3,7 @@
 - brain
 - buddha
 - butterfly
-- car_side
+- camera
 - chair
 - chandelier
 - cougar_face

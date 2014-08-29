@@ -1,6 +1,8 @@
 package projetoiti;
 
-public class Intervalo {
+import java.io.Serializable;
+
+public class Intervalo implements Serializable {
 
     private double inicio;
     private double fim;
